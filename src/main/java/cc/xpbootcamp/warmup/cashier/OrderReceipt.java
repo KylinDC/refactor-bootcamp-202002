@@ -16,21 +16,29 @@ public class OrderReceipt {
         output.append(order.getCustomerName());
         output.append(order.getCustomerAddress());
 
-        for (LineItem lineItem : order.getLineItems()) {
-            output.append(lineItem.getDescription());
-            output.append('\t');
-            output.append(lineItem.getPrice());
-            output.append('\t');
-            output.append(lineItem.getQuantity());
-            output.append('\t');
-            output.append(lineItem.totalAmount());
-            output.append('\n');
-        }
+        output.append(printLineItemInformation(order));
 
         output.append("Sales Tax").append('\t').append(getTotalSalesTax(order));
 
         output.append("Total Amount").append('\t').append(getFinalTotalAmount(order));
         return output.toString();
+    }
+
+    private String printLineItemInformation(Order order) {
+        StringBuilder result = new StringBuilder();
+
+        for (LineItem lineItem : order.getLineItems()) {
+            result.append(lineItem.getDescription());
+            result.append('\t');
+            result.append(lineItem.getPrice());
+            result.append('\t');
+            result.append(lineItem.getQuantity());
+            result.append('\t');
+            result.append(lineItem.totalAmount());
+            result.append('\n');
+        }
+
+        return result.toString();
     }
 
     private double getTotalSalesTax(Order order) {
