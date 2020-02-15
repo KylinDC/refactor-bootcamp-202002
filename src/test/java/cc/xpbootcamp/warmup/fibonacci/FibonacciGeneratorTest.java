@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FibonacciGeneratorTest {
 
@@ -31,6 +32,12 @@ class FibonacciGeneratorTest {
     void should_return_12586269025L_when_calculate_given_position_is_50() {
         long result = FibonacciGenerator.calculate(50);
         assertEquals(12586269025L, result);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {0, -1, -2})
+    void should_get_IllegalArgumentException_when_calculate_given_position_is_less_than_1(int position) {
+        assertThrows(IllegalArgumentException.class, () -> FibonacciGenerator.calculate(position), "The position should greater than 0");
     }
 
 }

@@ -7,6 +7,10 @@ public class FibonacciGenerator {
     private static Map<Integer, Long> cache = new HashMap<>();
 
     public static long calculate(int position) {
+        if (position < 1) {
+            throw new IllegalArgumentException("The position should greater than 0");
+        }
+
         if (position == 1 || position == 2) {
             return 1L;
         }
