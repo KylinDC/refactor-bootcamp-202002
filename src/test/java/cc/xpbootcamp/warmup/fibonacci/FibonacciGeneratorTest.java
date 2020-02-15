@@ -21,4 +21,10 @@ class FibonacciGeneratorTest {
         assertEquals(2, result);
     }
 
+    @Test
+    void should_return_3_when_calculate_given_position_is_4() {
+        long result = FibonacciGenerator.calculate(4);
+        assertEquals(3, result);
+    }
+
 }
