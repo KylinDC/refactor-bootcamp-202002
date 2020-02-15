@@ -34,9 +34,16 @@ public class OrderReceipt {
             finalTotalAmount += lineItem.totalAmount() + salesTax;
         }
 
-        output.append("Sales Tax").append('\t').append(totalSalesTax);
+        output.append("Sales Tax").append('\t').append(getTotalSalesTax(order));
 
         output.append("Total Amount").append('\t').append(finalTotalAmount);
         return output.toString();
+    }
+
+    private double getTotalSalesTax(Order order) {
+        return order.getLineItems().stream()
+                .mapToDouble(LineItem::totalAmount)
+                .map(totalAmount -> totalAmount * 0.10)
+                .sum();
     }
 }
