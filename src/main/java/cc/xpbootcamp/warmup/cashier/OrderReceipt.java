@@ -43,8 +43,7 @@ public class OrderReceipt {
 
     private double getTotalSalesTax(Order order) {
         return order.getLineItems().stream()
-                .mapToDouble(LineItem::totalAmount)
-                .map(totalAmount -> totalAmount * 0.10)
+                .mapToDouble(LineItem::getSalesTax)
                 .sum();
     }
 

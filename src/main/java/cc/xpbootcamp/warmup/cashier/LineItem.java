@@ -23,7 +23,11 @@ public class LineItem {
         return quantity;
     }
 
-    double totalAmount() {
+    public double totalAmount() {
         return price * quantity;
+    }
+
+    public double getSalesTax() {
+        return totalAmount() * 0.10;
     }
 }
