@@ -27,4 +27,10 @@ class FibonacciGeneratorTest {
         assertEquals(3, result);
     }
 
+    @Test
+    void should_return_12586269025L_when_calculate_given_position_is_50() {
+        long result = FibonacciGenerator.calculate(50);
+        assertEquals(12586269025L, result);
+    }
+
 }
