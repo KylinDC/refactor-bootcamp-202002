@@ -40,4 +40,10 @@ class FibonacciGeneratorTest {
         assertThrows(IllegalArgumentException.class, () -> FibonacciGenerator.calculate(position), "The position should greater than 0");
     }
 
+    @ParameterizedTest
+    @ValueSource(ints = {51, 52, 100})
+    void should_get_IllegalArgumentException_when_calculate_given_position_is_greater_than_50(int position) {
+        assertThrows(IllegalArgumentException.class, () -> FibonacciGenerator.calculate(position), "The position should less than 51");
+    }
+
 }

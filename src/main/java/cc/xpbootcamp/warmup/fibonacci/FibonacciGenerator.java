@@ -11,6 +11,10 @@ public class FibonacciGenerator {
             throw new IllegalArgumentException("The position should greater than 0");
         }
 
+        if (position > 50) {
+            throw new IllegalArgumentException("The position should less than 51");
+        }
+
         if (position == 1 || position == 2) {
             return 1L;
         }
