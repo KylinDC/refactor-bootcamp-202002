@@ -17,7 +17,7 @@ public class OrderReceipt {
 
         output.append(printDataInformation());
 
-        output.append(printLineItemInformation(order));
+        output.append(printLineItemInformation());
 
         output.append("Sales Tax").append('\t').append(order.getTotalSalesTax());
         output.append("Total Amount").append('\t').append(order.getTotalAmount());
@@ -36,7 +36,7 @@ public class OrderReceipt {
         return result.toString();
     }
 
-    private String printLineItemInformation(Order order) {
+    private String printLineItemInformation() {
         StringBuilder result = new StringBuilder();
 
         for (LineItem lineItem : order.getLineItems()) {
