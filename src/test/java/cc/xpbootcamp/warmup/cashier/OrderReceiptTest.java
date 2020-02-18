@@ -11,7 +11,19 @@ import static org.hamcrest.Matchers.containsString;
 class OrderReceiptTest {
 
     @Test
-    public void shouldPrintLineItemAndSalesTaxInformation() {
+    void should_print_order_date_information() {
+        OrderReceipt orderReceipt = new OrderReceipt(new Order(null, null, new ArrayList<LineItem>()));
+
+        String output = orderReceipt.printReceipt();
+
+        assertThat(output, containsString("年"));
+        assertThat(output, containsString("月"));
+        assertThat(output, containsString("日"));
+        assertThat(output, containsString("星期"));
+    }
+
+    @Test
+    void should_print_LineItem_and_SalesTax_information() {
         List<LineItem> lineItems = new ArrayList<LineItem>() {{
             add(new LineItem("milk", 10.0, 2));
             add(new LineItem("biscuits", 5.0, 5));
