@@ -11,6 +11,15 @@ import static org.hamcrest.Matchers.containsString;
 class OrderReceiptTest {
 
     @Test
+    void should_print_order_title() {
+        OrderReceipt orderReceipt = new OrderReceipt(new Order(null, null, new ArrayList<LineItem>()));
+
+        String output = orderReceipt.printReceipt();
+
+        assertThat(output, containsString("老王超市，值得信赖"));
+    }
+
+    @Test
     void should_print_order_date_information() {
         OrderReceipt orderReceipt = new OrderReceipt(new Order(null, null, new ArrayList<LineItem>()));
 
