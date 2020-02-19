@@ -1,7 +1,12 @@
 package cc.xpbootcamp.warmup.cashier;
 
-import java.time.format.TextStyle;
-import java.util.Locale;
+import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.DATE_FORMATTER;
+import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.NEW_LINE;
+import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.PRICE_INFORMATION_FORMATTER;
+import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.PRICE_INFORMATION_FORMATTER_WITH_DISCOUNT;
+import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.PRODUCT_FORMATTER;
+import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.RECEIPT_HEADER;
+import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.SPLIT_LINE;
 
 public class OrderReceipt {
     private Order order;
@@ -14,13 +19,14 @@ public class OrderReceipt {
         StringBuilder output = new StringBuilder();
 
         output.append(printReceiptHeader());
-        output.append("\n");
+        output.append(NEW_LINE);
 
         output.append(printDataInformation());
-        output.append("\n");
+        output.append(NEW_LINE);
 
         output.append(printLineItemInformation());
-        output.append("-----------------------------------\n");
+        output.append(SPLIT_LINE);
+        output.append(NEW_LINE);
 
         output.append(printPriceInformation());
 
@@ -28,47 +34,37 @@ public class OrderReceipt {
     }
 
     private String printReceiptHeader() {
-        return "===== 老王超市，值得信赖 ======\n";
+        return RECEIPT_HEADER;
     }
 
     private String printDataInformation() {
-        StringBuilder result = new StringBuilder();
-
-        result.append(order.getCreateDate().getYear()).append("年");
-        result.append(order.getCreateDate().getMonthValue()).append("月");
-        result.append(order.getCreateDate().getDayOfMonth()).append("日，");
-        result.append(order.getCreateDate().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.CHINA));
-        result.append("\n");
-
-        return result.toString();
+        return order.getCreateDate().format(DATE_FORMATTER);
     }
 
     private String printLineItemInformation() {
         StringBuilder result = new StringBuilder();
 
         for (Product product : order.getProducts()) {
-            result.append(product.getDescription());
-            result.append(", ");
-            result.append(product.getPrice());
-            result.append(" x ");
-            result.append(product.getQuantity());
-            result.append(", ");
-            result.append(product.totalAmount());
-            result.append('\n');
+            result.append(String
+                    .format(PRODUCT_FORMATTER,
+                            product.getDescription(),
+                            product.getPrice(),
+                            product.getQuantity(),
+                            product.totalAmount()));
         }
 
         return result.toString();
     }
 
     private String printPriceInformation() {
-        StringBuilder result = new StringBuilder();
-
-        result.append("税额:").append('\t').append(order.getTotalSalesTax()).append("\n");
         if (order.isDiscountDay()) {
-            result.append("折扣:").append('\t').append(order.getDiscount()).append("\n");
+            return String.format(PRICE_INFORMATION_FORMATTER_WITH_DISCOUNT,
+                    order.getTotalSalesTax(),
+                    order.getDiscount(),
+                    order.getTotalAmount());
         }
-        result.append("总价:").append('\t').append(order.getTotalAmount()).append("\n");
-
-        return result.toString();
+        return String.format(PRICE_INFORMATION_FORMATTER,
+                order.getTotalSalesTax(),
+                order.getTotalAmount());
     }
 }
