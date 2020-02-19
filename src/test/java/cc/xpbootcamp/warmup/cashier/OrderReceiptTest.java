@@ -19,7 +19,7 @@ class OrderReceiptTest {
 
         String output = orderReceipt.printReceipt();
 
-        assertThat(output, containsString("老王超市，值得信赖"));
+        assertThat(output, containsString("===== 老王超市，值得信赖 ======\n\n"));
     }
 
     @Test
@@ -62,10 +62,8 @@ class OrderReceiptTest {
         OrderReceipt receipt = new OrderReceipt(spyOrder);
         String output = receipt.printReceipt();
 
-        assertThat(output, containsString("巧克力, 21.50 x 2, 43.00"));
-        assertThat(output, containsString("小白菜, 10.00 x 1, 10.00"));
-        assertThat(output, containsString("税额:\t5.30"));
-        assertThat(output, containsString("总价:\t58.30"));
+        assertThat(output, containsString("税额:\t5.30\n"));
+        assertThat(output, containsString("总价:\t58.30\n"));
     }
 
     @Test
@@ -80,11 +78,9 @@ class OrderReceiptTest {
         OrderReceipt receipt = new OrderReceipt(spyOrder);
         String output = receipt.printReceipt();
 
-        assertThat(output, containsString("巧克力, 21.50 x 2, 43.00"));
-        assertThat(output, containsString("小白菜, 10.00 x 1, 10.00"));
-        assertThat(output, containsString("税额:\t5.30"));
-        assertThat(output, containsString("折扣:\t1.17"));
-        assertThat(output, containsString("总价:\t57.13"));
+        assertThat(output, containsString("税额:\t5.30\n"));
+        assertThat(output, containsString("折扣:\t1.17\n"));
+        assertThat(output, containsString("总价:\t57.13\n"));
     }
 
 }
