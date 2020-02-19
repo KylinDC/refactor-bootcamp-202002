@@ -2,6 +2,7 @@ package cc.xpbootcamp.warmup.cashier;
 
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +37,9 @@ class OrderReceiptTest {
     @Test
     void should_print_LineItem_and_SalesTax_information_when_not_discount_day() {
         List<LineItem> lineItems = new ArrayList<LineItem>() {{
-            add(new LineItem("milk", 10.0, 2));
-            add(new LineItem("biscuits", 5.0, 5));
-            add(new LineItem("chocolate", 20.0, 1));
+            add(new LineItem("milk", new BigDecimal("10.00"), 2));
+            add(new LineItem("biscuits", new BigDecimal("5.00"), 5));
+            add(new LineItem("chocolate", new BigDecimal("20.00"), 1));
         }};
         Order spyOrder = spy(new Order(null, null, lineItems));
         doReturn(false).when(spyOrder).isDiscountDay();
@@ -46,19 +47,19 @@ class OrderReceiptTest {
         OrderReceipt receipt = new OrderReceipt(spyOrder);
         String output = receipt.printReceipt();
 
-        assertThat(output, containsString("milk\t10.0\t2\t20.0\n"));
-        assertThat(output, containsString("biscuits\t5.0\t5\t25.0\n"));
-        assertThat(output, containsString("chocolate\t20.0\t1\t20.0\n"));
-        assertThat(output, containsString("Sales Tax\t6.5"));
-        assertThat(output, containsString("Total Amount\t71.5"));
+        assertThat(output, containsString("milk\t10.00\t2\t20.00\n"));
+        assertThat(output, containsString("biscuits\t5.00\t5\t25.00\n"));
+        assertThat(output, containsString("chocolate\t20.00\t1\t20.00\n"));
+        assertThat(output, containsString("Sales Tax\t6.51"));
+        assertThat(output, containsString("Total Amount\t71.51"));
     }
 
     @Test
     void should_print_LineItem_and_SalesTax_information_when_discount_day() {
         List<LineItem> lineItems = new ArrayList<LineItem>() {{
-            add(new LineItem("milk", 10.0, 2));
-            add(new LineItem("biscuits", 5.0, 5));
-            add(new LineItem("chocolate", 20.0, 1));
+            add(new LineItem("milk", new BigDecimal("10.00"), 2));
+            add(new LineItem("biscuits", new BigDecimal("5.00"), 5));
+            add(new LineItem("chocolate", new BigDecimal("20.00"), 1));
         }};
         Order spyOrder = spy(new Order(null, null, lineItems));
         doReturn(true).when(spyOrder).isDiscountDay();
@@ -66,11 +67,11 @@ class OrderReceiptTest {
         OrderReceipt receipt = new OrderReceipt(spyOrder);
         String output = receipt.printReceipt();
 
-        assertThat(output, containsString("milk\t10.0\t2\t20.0\n"));
-        assertThat(output, containsString("biscuits\t5.0\t5\t25.0\n"));
-        assertThat(output, containsString("chocolate\t20.0\t1\t20.0\n"));
-        assertThat(output, containsString("Sales Tax\t6.5"));
-        assertThat(output, containsString("Discount\t1.43"));
+        assertThat(output, containsString("milk\t10.00\t2\t20.00\n"));
+        assertThat(output, containsString("biscuits\t5.00\t5\t25.00\n"));
+        assertThat(output, containsString("chocolate\t20.00\t1\t20.00\n"));
+        assertThat(output, containsString("Sales Tax\t6.51"));
+        assertThat(output, containsString("Discount\t1.44"));
         assertThat(output, containsString("Total Amount\t70.07"));
     }
 

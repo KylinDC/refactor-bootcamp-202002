@@ -1,5 +1,6 @@
 package cc.xpbootcamp.warmup.cashier;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class Order {
     private List<LineItem> lineItems;
     private LocalDate createDate;
     private static final double DISCOUNT_RATE = 0.02;
-    private static final double DEFAULT_DISCOUNT = 0d;
+    private static final BigDecimal DEFAULT_DISCOUNT = new BigDecimal(0);
 
     public Order(String customerName, String customerAddress, List<LineItem> lineItems) {
         this.customerName = customerName;
@@ -32,12 +33,15 @@ public class Order {
         return lineItems;
     }
 
-    public double getTotalSalesTax() {
-        return lineItems.stream().mapToDouble(LineItem::getSalesTax).sum();
+    public BigDecimal getTotalSalesTax() {
+        return financeFormatter(lineItems.stream()
+                .map(LineItem::getSalesTax)
+                .reduce(BigDecimal::add)
+                .orElse(new BigDecimal(0)));
     }
 
-    public double getTotalAmount() {
-        return getOriginTotalAmount() - getDiscount();
+    public BigDecimal getTotalAmount() {
+        return financeFormatter(getOriginTotalAmount().subtract(getDiscount()));
     }
 
     public LocalDate getCreateDate() {
@@ -48,15 +52,23 @@ public class Order {
         return createDate.getDayOfWeek().equals(WEDNESDAY);
     }
 
-    public double getDiscount() {
+    public BigDecimal getDiscount() {
         if (isDiscountDay()) {
-            return Double.parseDouble(String.format("%.2f", getOriginTotalAmount() * DISCOUNT_RATE));
+            return financeFormatter(getOriginTotalAmount().multiply(new BigDecimal(DISCOUNT_RATE)));
         }
-        return DEFAULT_DISCOUNT;
+        return financeFormatter(DEFAULT_DISCOUNT);
     }
 
-    private double getOriginTotalAmount() {
-        double totalAmount = lineItems.stream().mapToDouble(LineItem::totalAmount).sum();
-        return totalAmount + getTotalSalesTax();
+    private BigDecimal getOriginTotalAmount() {
+        BigDecimal lineItemTotalAmount = lineItems.stream()
+                .map(LineItem::totalAmount)
+                .reduce(BigDecimal::add)
+                .orElse(new BigDecimal(0));
+
+        return financeFormatter(lineItemTotalAmount.add(getTotalSalesTax()));
+    }
+
+    private BigDecimal financeFormatter(BigDecimal finance) {
+        return finance.setScale(2, BigDecimal.ROUND_UP);
     }
 }

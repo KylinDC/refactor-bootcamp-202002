@@ -1,11 +1,14 @@
 package cc.xpbootcamp.warmup.cashier;
 
+import java.math.BigDecimal;
+
 public class LineItem {
     private String description;
-    private double price;
+    private static final double DEFAULT_TAX_RATE = 0.10;
     private int quantity;
+    private BigDecimal price;
 
-    public LineItem(String description, double price, int quantity) {
+    public LineItem(String description, BigDecimal price, int quantity) {
         this.description = description;
         this.price = price;
         this.quantity = quantity;
@@ -15,7 +18,7 @@ public class LineItem {
         return description;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
@@ -23,11 +26,11 @@ public class LineItem {
         return quantity;
     }
 
-    public double totalAmount() {
-        return price * quantity;
+    public BigDecimal totalAmount() {
+        return price.multiply(new BigDecimal(quantity));
     }
 
-    public double getSalesTax() {
-        return totalAmount() * 0.10;
+    public BigDecimal getSalesTax() {
+        return totalAmount().multiply(new BigDecimal(DEFAULT_TAX_RATE));
     }
 }
