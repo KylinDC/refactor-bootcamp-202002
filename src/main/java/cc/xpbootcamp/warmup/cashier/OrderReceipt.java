@@ -57,6 +57,11 @@ public class OrderReceipt {
         StringBuilder result = new StringBuilder();
 
         result.append("Sales Tax").append('\t').append(order.getTotalSalesTax()).append("\n");
+
+        if (order.isDiscountDay()) {
+            result.append("Discount").append('\t').append(order.getDiscount()).append("\n");
+        }
+
         result.append("Total Amount").append('\t').append(order.getTotalAmount()).append("\n");
 
         return result.toString();
