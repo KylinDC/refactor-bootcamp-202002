@@ -35,6 +35,22 @@ class OrderReceiptTest {
     }
 
     @Test
+    void should_print_LineItem_information() {
+        List<LineItem> lineItems = new ArrayList<LineItem>() {{
+            add(new LineItem("巧克力", new BigDecimal("21.50"), 2));
+            add(new LineItem("小白菜", new BigDecimal("10.00"), 1));
+        }};
+        Order order = new Order(null, null, lineItems);
+
+        OrderReceipt orderReceipt = new OrderReceipt(order);
+        String output = orderReceipt.printReceipt();
+
+        assertThat(output, containsString("巧克力, 21.50 x 2, 43.00\n"));
+        assertThat(output, containsString("小白菜, 10.00 x 1, 10.00\n"));
+        assertThat(output, containsString("----------------------------\n"));
+    }
+
+    @Test
     void should_print_LineItem_and_SalesTax_information_when_not_discount_day() {
         List<LineItem> lineItems = new ArrayList<LineItem>() {{
             add(new LineItem("巧克力", new BigDecimal("21.50"), 2));
