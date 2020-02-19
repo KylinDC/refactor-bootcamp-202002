@@ -69,6 +69,6 @@ public class Order {
     }
 
     private BigDecimal financeFormatter(BigDecimal finance) {
-        return finance.setScale(2, BigDecimal.ROUND_UP);
+        return finance.setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 }

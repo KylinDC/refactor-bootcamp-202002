@@ -13,15 +13,22 @@ public class OrderReceipt {
     public String printReceipt() {
         StringBuilder output = new StringBuilder();
 
-        output.append("===== 老王超市，值得信赖 ======\n");
+        output.append(printReceiptHeader());
+        output.append("\n");
 
         output.append(printDataInformation());
+        output.append("\n");
 
         output.append(printLineItemInformation());
+        output.append("-----------------------------------\n");
 
         output.append(printPriceInformation());
 
         return output.toString();
+    }
+
+    private String printReceiptHeader() {
+        return "===== 老王超市，值得信赖 ======\n";
     }
 
     private String printDataInformation() {
@@ -41,11 +48,11 @@ public class OrderReceipt {
 
         for (LineItem lineItem : order.getLineItems()) {
             result.append(lineItem.getDescription());
-            result.append('\t');
+            result.append(", ");
             result.append(lineItem.getPrice());
-            result.append('\t');
+            result.append(" x ");
             result.append(lineItem.getQuantity());
-            result.append('\t');
+            result.append(", ");
             result.append(lineItem.totalAmount());
             result.append('\n');
         }
@@ -56,13 +63,11 @@ public class OrderReceipt {
     private String printPriceInformation() {
         StringBuilder result = new StringBuilder();
 
-        result.append("Sales Tax").append('\t').append(order.getTotalSalesTax()).append("\n");
-
+        result.append("税额:").append('\t').append(order.getTotalSalesTax()).append("\n");
         if (order.isDiscountDay()) {
-            result.append("Discount").append('\t').append(order.getDiscount()).append("\n");
+            result.append("折扣:").append('\t').append(order.getDiscount()).append("\n");
         }
-
-        result.append("Total Amount").append('\t').append(order.getTotalAmount()).append("\n");
+        result.append("总价:").append('\t').append(order.getTotalAmount()).append("\n");
 
         return result.toString();
     }
