@@ -7,6 +7,8 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 class OrderReceiptTest {
 
@@ -32,14 +34,16 @@ class OrderReceiptTest {
     }
 
     @Test
-    void should_print_LineItem_and_SalesTax_information() {
+    void should_print_LineItem_and_SalesTax_information_when_not_discount_day() {
         List<LineItem> lineItems = new ArrayList<LineItem>() {{
             add(new LineItem("milk", 10.0, 2));
             add(new LineItem("biscuits", 5.0, 5));
             add(new LineItem("chocolate", 20.0, 1));
         }};
-        OrderReceipt receipt = new OrderReceipt(new Order(null, null, lineItems));
+        Order spyOrder = spy(new Order(null, null, lineItems));
+        doReturn(false).when(spyOrder).isDiscountDay();
 
+        OrderReceipt receipt = new OrderReceipt(spyOrder);
         String output = receipt.printReceipt();
 
         assertThat(output, containsString("milk\t10.0\t2\t20.0\n"));

@@ -31,6 +31,7 @@ public class OrderReceipt {
         result.append(order.getCreateDate().getMonthValue()).append("月");
         result.append(order.getCreateDate().getDayOfMonth()).append("日，");
         result.append(order.getCreateDate().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.CHINA));
+        result.append("\n");
 
         return result.toString();
     }
@@ -55,8 +56,8 @@ public class OrderReceipt {
     private String printPriceInformation() {
         StringBuilder result = new StringBuilder();
 
-        result.append("Sales Tax").append('\t').append(order.getTotalSalesTax());
-        result.append("Total Amount").append('\t').append(order.getTotalAmount());
+        result.append("Sales Tax").append('\t').append(order.getTotalSalesTax()).append("\n");
+        result.append("Total Amount").append('\t').append(order.getTotalAmount()).append("\n");
 
         return result.toString();
     }
