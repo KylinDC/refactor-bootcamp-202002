@@ -2,6 +2,8 @@ package cc.xpbootcamp.warmup.cashier;
 
 import java.math.BigDecimal;
 
+import static cc.xpbootcamp.warmup.cashier.Utils.financeFormatter;
+
 public class Product {
     private String description;
     private static final double DEFAULT_TAX_RATE = 0.10;
@@ -19,7 +21,7 @@ public class Product {
     }
 
     public BigDecimal getPrice() {
-        return price;
+        return financeFormatter(price);
     }
 
     public int getQuantity() {
@@ -27,10 +29,10 @@ public class Product {
     }
 
     public BigDecimal totalAmount() {
-        return price.multiply(new BigDecimal(quantity));
+        return financeFormatter(price.multiply(new BigDecimal(quantity)));
     }
 
     public BigDecimal getSalesTax() {
-        return totalAmount().multiply(new BigDecimal(DEFAULT_TAX_RATE));
+        return financeFormatter(totalAmount().multiply(new BigDecimal(DEFAULT_TAX_RATE)));
     }
 }

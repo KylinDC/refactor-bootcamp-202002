@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import static cc.xpbootcamp.warmup.cashier.Utils.financeFormatter;
 import static java.time.DayOfWeek.WEDNESDAY;
 
 public class Order {
@@ -66,9 +67,5 @@ public class Order {
                 .orElse(new BigDecimal(0));
 
         return financeFormatter(lineItemTotalAmount.add(getTotalSalesTax()));
-    }
-
-    private BigDecimal financeFormatter(BigDecimal finance) {
-        return finance.setScale(2, BigDecimal.ROUND_HALF_UP);
     }
 }
