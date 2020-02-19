@@ -19,8 +19,7 @@ public class OrderReceipt {
 
         output.append(printLineItemInformation());
 
-        output.append("Sales Tax").append('\t').append(order.getTotalSalesTax());
-        output.append("Total Amount").append('\t').append(order.getTotalAmount());
+        output.append(printPriceInformation());
 
         return output.toString();
     }
@@ -49,6 +48,15 @@ public class OrderReceipt {
             result.append(lineItem.totalAmount());
             result.append('\n');
         }
+
+        return result.toString();
+    }
+
+    private String printPriceInformation() {
+        StringBuilder result = new StringBuilder();
+
+        result.append("Sales Tax").append('\t').append(order.getTotalSalesTax());
+        result.append("Total Amount").append('\t').append(order.getTotalAmount());
 
         return result.toString();
     }
