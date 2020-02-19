@@ -9,15 +9,15 @@ import static java.time.DayOfWeek.WEDNESDAY;
 public class Order {
     private String customerName;
     private String customerAddress;
-    private List<LineItem> lineItems;
+    private List<Product> products;
     private LocalDate createDate;
     private static final double DISCOUNT_RATE = 0.02;
     private static final BigDecimal DEFAULT_DISCOUNT = new BigDecimal(0);
 
-    public Order(String customerName, String customerAddress, List<LineItem> lineItems) {
+    public Order(String customerName, String customerAddress, List<Product> products) {
         this.customerName = customerName;
         this.customerAddress = customerAddress;
-        this.lineItems = lineItems;
+        this.products = products;
         createDate = LocalDate.now();
     }
 
@@ -29,13 +29,13 @@ public class Order {
         return customerAddress;
     }
 
-    public List<LineItem> getLineItems() {
-        return lineItems;
+    public List<Product> getProducts() {
+        return products;
     }
 
     public BigDecimal getTotalSalesTax() {
-        return financeFormatter(lineItems.stream()
-                .map(LineItem::getSalesTax)
+        return financeFormatter(products.stream()
+                .map(Product::getSalesTax)
                 .reduce(BigDecimal::add)
                 .orElse(new BigDecimal(0)));
     }
@@ -60,8 +60,8 @@ public class Order {
     }
 
     private BigDecimal getOriginTotalAmount() {
-        BigDecimal lineItemTotalAmount = lineItems.stream()
-                .map(LineItem::totalAmount)
+        BigDecimal lineItemTotalAmount = products.stream()
+                .map(Product::totalAmount)
                 .reduce(BigDecimal::add)
                 .orElse(new BigDecimal(0));
 

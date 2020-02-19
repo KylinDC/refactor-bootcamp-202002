@@ -46,14 +46,14 @@ public class OrderReceipt {
     private String printLineItemInformation() {
         StringBuilder result = new StringBuilder();
 
-        for (LineItem lineItem : order.getLineItems()) {
-            result.append(lineItem.getDescription());
+        for (Product product : order.getProducts()) {
+            result.append(product.getDescription());
             result.append(", ");
-            result.append(lineItem.getPrice());
+            result.append(product.getPrice());
             result.append(" x ");
-            result.append(lineItem.getQuantity());
+            result.append(product.getQuantity());
             result.append(", ");
-            result.append(lineItem.totalAmount());
+            result.append(product.totalAmount());
             result.append('\n');
         }
 

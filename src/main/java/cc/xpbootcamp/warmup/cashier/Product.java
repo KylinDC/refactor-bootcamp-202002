@@ -2,13 +2,13 @@ package cc.xpbootcamp.warmup.cashier;
 
 import java.math.BigDecimal;
 
-public class LineItem {
+public class Product {
     private String description;
     private static final double DEFAULT_TAX_RATE = 0.10;
     private int quantity;
     private BigDecimal price;
 
-    public LineItem(String description, BigDecimal price, int quantity) {
+    public Product(String description, BigDecimal price, int quantity) {
         this.description = description;
         this.price = price;
         this.quantity = quantity;
