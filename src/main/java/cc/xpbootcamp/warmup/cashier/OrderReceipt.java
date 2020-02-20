@@ -24,7 +24,7 @@ public class OrderReceipt {
         output.append(printDataInformation());
         output.append(NEW_LINE);
 
-        output.append(printLineItemInformation());
+        output.append(printProductInformation());
         output.append(SPLIT_LINE);
         output.append(NEW_LINE);
 
@@ -41,7 +41,7 @@ public class OrderReceipt {
         return order.getCreateDate().format(DATE_FORMATTER);
     }
 
-    private String printLineItemInformation() {
+    private String printProductInformation() {
         StringBuilder result = new StringBuilder();
 
         for (Product product : order.getProducts()) {
