@@ -8,23 +8,23 @@ import static cc.xpbootcamp.warmup.cashier.Utils.financeFormatter;
 import static java.time.DayOfWeek.WEDNESDAY;
 
 public class Order {
-    private List<Product> products;
+    private List<OrderItem> orderItems;
     private LocalDate createDate;
     private static final double DISCOUNT_RATE = 0.02;
     private static final BigDecimal DEFAULT_DISCOUNT = new BigDecimal(0);
 
-    public Order(List<Product> products) {
-        this.products = products;
+    public Order(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
         createDate = LocalDate.now();
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
     public BigDecimal getTotalSalesTax() {
-        return financeFormatter(products.stream()
-                .map(Product::getSalesTax)
+        return financeFormatter(orderItems.stream()
+                .map(OrderItem::getSalesTax)
                 .reduce(BigDecimal::add)
                 .orElse(new BigDecimal(0)));
     }
@@ -49,8 +49,8 @@ public class Order {
     }
 
     private BigDecimal getOriginTotalAmount() {
-        BigDecimal lineItemTotalAmount = products.stream()
-                .map(Product::totalAmount)
+        BigDecimal lineItemTotalAmount = orderItems.stream()
+                .map(OrderItem::totalAmount)
                 .reduce(BigDecimal::add)
                 .orElse(new BigDecimal(0));
 

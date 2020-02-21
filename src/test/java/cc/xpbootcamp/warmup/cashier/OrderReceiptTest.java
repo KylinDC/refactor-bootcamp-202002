@@ -24,7 +24,7 @@ class OrderReceiptTest {
 
     @Test
     void should_print_order_date_information() {
-        OrderReceipt orderReceipt = new OrderReceipt(new Order(new ArrayList<Product>()));
+        OrderReceipt orderReceipt = new OrderReceipt(new Order(new ArrayList<OrderItem>()));
 
         String output = orderReceipt.printReceipt();
 
@@ -36,11 +36,11 @@ class OrderReceiptTest {
 
     @Test
     void should_print_LineItem_information() {
-        List<Product> products = new ArrayList<Product>() {{
-            add(new Product("巧克力", new BigDecimal("21.50"), 2));
-            add(new Product("小白菜", new BigDecimal("10.00"), 1));
+        List<OrderItem> orderItems = new ArrayList<OrderItem>() {{
+            add(new OrderItem("巧克力", new BigDecimal("21.50"), 2));
+            add(new OrderItem("小白菜", new BigDecimal("10.00"), 1));
         }};
-        Order order = new Order(products);
+        Order order = new Order(orderItems);
 
         OrderReceipt orderReceipt = new OrderReceipt(order);
         String output = orderReceipt.printReceipt();
@@ -52,11 +52,11 @@ class OrderReceiptTest {
 
     @Test
     void should_print_LineItem_and_SalesTax_information_when_not_discount_day() {
-        List<Product> products = new ArrayList<Product>() {{
-            add(new Product("巧克力", new BigDecimal("21.50"), 2));
-            add(new Product("小白菜", new BigDecimal("10.00"), 1));
+        List<OrderItem> orderItems = new ArrayList<OrderItem>() {{
+            add(new OrderItem("巧克力", new BigDecimal("21.50"), 2));
+            add(new OrderItem("小白菜", new BigDecimal("10.00"), 1));
         }};
-        Order spyOrder = spy(new Order(products));
+        Order spyOrder = spy(new Order(orderItems));
         doReturn(false).when(spyOrder).isDiscountDay();
 
         OrderReceipt receipt = new OrderReceipt(spyOrder);
@@ -68,11 +68,11 @@ class OrderReceiptTest {
 
     @Test
     void should_print_LineItem_and_SalesTax_information_when_discount_day() {
-        List<Product> products = new ArrayList<Product>() {{
-            add(new Product("巧克力", new BigDecimal("21.50"), 2));
-            add(new Product("小白菜", new BigDecimal("10.00"), 1));
+        List<OrderItem> orderItems = new ArrayList<OrderItem>() {{
+            add(new OrderItem("巧克力", new BigDecimal("21.50"), 2));
+            add(new OrderItem("小白菜", new BigDecimal("10.00"), 1));
         }};
-        Order spyOrder = spy(new Order(products));
+        Order spyOrder = spy(new Order(orderItems));
         doReturn(true).when(spyOrder).isDiscountDay();
 
         OrderReceipt receipt = new OrderReceipt(spyOrder);

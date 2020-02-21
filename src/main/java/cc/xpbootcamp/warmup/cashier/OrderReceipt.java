@@ -2,9 +2,9 @@ package cc.xpbootcamp.warmup.cashier;
 
 import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.DATE_FORMATTER;
 import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.NEW_LINE;
+import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.ORDER_ITEM_FORMATTER;
 import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.PRICE_INFORMATION_FORMATTER;
 import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.PRICE_INFORMATION_FORMATTER_WITH_DISCOUNT;
-import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.PRODUCT_FORMATTER;
 import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.RECEIPT_HEADER;
 import static cc.xpbootcamp.warmup.cashier.OrderReceiptConstant.SPLIT_LINE;
 
@@ -24,7 +24,7 @@ public class OrderReceipt {
         output.append(printDataInformation());
         output.append(NEW_LINE);
 
-        output.append(printProductInformation());
+        output.append(printOrderItemInformation());
         output.append(SPLIT_LINE);
         output.append(NEW_LINE);
 
@@ -41,16 +41,16 @@ public class OrderReceipt {
         return order.getCreateDate().format(DATE_FORMATTER);
     }
 
-    private String printProductInformation() {
+    private String printOrderItemInformation() {
         StringBuilder result = new StringBuilder();
 
-        for (Product product : order.getProducts()) {
+        for (OrderItem orderItem : order.getOrderItems()) {
             result.append(String
-                    .format(PRODUCT_FORMATTER,
-                            product.getDescription(),
-                            product.getPrice(),
-                            product.getQuantity(),
-                            product.totalAmount()));
+                    .format(ORDER_ITEM_FORMATTER,
+                            orderItem.getDescription(),
+                            orderItem.getPrice(),
+                            orderItem.getQuantity(),
+                            orderItem.totalAmount()));
         }
 
         return result.toString();
