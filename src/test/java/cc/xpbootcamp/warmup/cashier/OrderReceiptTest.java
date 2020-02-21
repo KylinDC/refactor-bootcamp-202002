@@ -15,7 +15,7 @@ class OrderReceiptTest {
 
     @Test
     void should_print_order_title() {
-        OrderReceipt orderReceipt = new OrderReceipt(new Order(null, null, new ArrayList<>()));
+        OrderReceipt orderReceipt = new OrderReceipt(new Order(new ArrayList<>()));
 
         String output = orderReceipt.printReceipt();
 
@@ -24,7 +24,7 @@ class OrderReceiptTest {
 
     @Test
     void should_print_order_date_information() {
-        OrderReceipt orderReceipt = new OrderReceipt(new Order(null, null, new ArrayList<Product>()));
+        OrderReceipt orderReceipt = new OrderReceipt(new Order(new ArrayList<Product>()));
 
         String output = orderReceipt.printReceipt();
 
@@ -40,7 +40,7 @@ class OrderReceiptTest {
             add(new Product("巧克力", new BigDecimal("21.50"), 2));
             add(new Product("小白菜", new BigDecimal("10.00"), 1));
         }};
-        Order order = new Order(null, null, products);
+        Order order = new Order(products);
 
         OrderReceipt orderReceipt = new OrderReceipt(order);
         String output = orderReceipt.printReceipt();
@@ -56,7 +56,7 @@ class OrderReceiptTest {
             add(new Product("巧克力", new BigDecimal("21.50"), 2));
             add(new Product("小白菜", new BigDecimal("10.00"), 1));
         }};
-        Order spyOrder = spy(new Order(null, null, products));
+        Order spyOrder = spy(new Order(products));
         doReturn(false).when(spyOrder).isDiscountDay();
 
         OrderReceipt receipt = new OrderReceipt(spyOrder);
@@ -72,7 +72,7 @@ class OrderReceiptTest {
             add(new Product("巧克力", new BigDecimal("21.50"), 2));
             add(new Product("小白菜", new BigDecimal("10.00"), 1));
         }};
-        Order spyOrder = spy(new Order(null, null, products));
+        Order spyOrder = spy(new Order(products));
         doReturn(true).when(spyOrder).isDiscountDay();
 
         OrderReceipt receipt = new OrderReceipt(spyOrder);

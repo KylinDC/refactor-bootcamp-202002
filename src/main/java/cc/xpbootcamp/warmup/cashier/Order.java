@@ -8,26 +8,14 @@ import static cc.xpbootcamp.warmup.cashier.Utils.financeFormatter;
 import static java.time.DayOfWeek.WEDNESDAY;
 
 public class Order {
-    private String customerName;
-    private String customerAddress;
     private List<Product> products;
     private LocalDate createDate;
     private static final double DISCOUNT_RATE = 0.02;
     private static final BigDecimal DEFAULT_DISCOUNT = new BigDecimal(0);
 
-    public Order(String customerName, String customerAddress, List<Product> products) {
-        this.customerName = customerName;
-        this.customerAddress = customerAddress;
+    public Order(List<Product> products) {
         this.products = products;
         createDate = LocalDate.now();
-    }
-
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public String getCustomerAddress() {
-        return customerAddress;
     }
 
     public List<Product> getProducts() {
